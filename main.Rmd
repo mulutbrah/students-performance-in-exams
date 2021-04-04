@@ -104,18 +104,13 @@ aggregate(math.score + reading.score + writing.score ~ race.ethnicity, data, mea
 
 Group E have higher score than any other groups in 3 test combine
 
-### Priviledge
+### Privilege
 
 #### Parental Level of Education
 
 ```{r}
 aggregate(math.score + reading.score + writing.score ~ parental.level.of.education, data, mean)
 ```
-
-```{r}
-heatmap(aggregate(math.score + reading.score + writing.score ~ parental.level.of.education, data, mean))
-```
-
 
 Parents with degree, which is have success in school, have more chance to make successful kid as well.
 
@@ -134,4 +129,4 @@ Student who finished Test Preparation Course have more successfull in test.
 
 ## Summary
 
-If we see on the data above, like it or not, priviledge does exist, parent education, lunch package, and test preparation course have an impact to what makes student more successful than the others. Genetic factors like gender female and etnicity group E have more successful in exams performance.
+If we see on the data above, like it or not, privilege does exist, parent education, lunch package, and test preparation course have an impact to what makes student more successful than the others. Genetic factors like gender female and etnicity group E have more successful in exams performanc

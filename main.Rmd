@@ -92,14 +92,14 @@ We have a mission to find out what external aspect that makes student success in
 #### Gender
 
 ```{r}
-aggregate((math.score + reading.score + writing.score)/3 ~ gender, data, mean)
+aggregate(math.score + reading.score + writing.score ~ gender, data, mean)
 ```
 Female have higher score than male in 3 test combine
 
 #### Race Ethnicity  
 
 ```{r}
-aggregate((math.score + reading.score + writing.score)/3 ~ race.ethnicity, data, mean)
+aggregate(math.score + reading.score + writing.score ~ race.ethnicity, data, mean)
 ```
 
 Group E have higher score than any other groups in 3 test combine
@@ -109,7 +109,7 @@ Group E have higher score than any other groups in 3 test combine
 #### Parental Level of Education
 
 ```{r}
-aggregate((math.score + reading.score + writing.score)/3 ~ parental.level.of.education, data, mean)
+aggregate(math.score + reading.score + writing.score ~ parental.level.of.education, data, mean)
 ```
 
 Parents with degree, which is have success in school, have more chance to make successful kid as well.
@@ -117,16 +117,16 @@ Parents with degree, which is have success in school, have more chance to make s
 #### Lunch
 
 ```{r}
-aggregate((math.score + reading.score + writing.score)/3 ~ lunch, data, mean)
+aggregate(math.score + reading.score + writing.score ~ lunch, data, mean)
 ```
 #### Test Preparation Course
 
 ```{r}
-aggregate((math.score + reading.score + writing.score)/3 ~ test.preparation.course, data, mean)
+aggregate(math.score + reading.score + writing.score ~ test.preparation.course, data, mean)
 ```
 
 Student who finished Test Preparation Course have more successfull in test.
 
 ## Summary
 
-If we see on the data above, like it or not, privilege does exist, parent education, lunch package, and test preparation course have an impact to what makes student more successful than the others. Genetic factors like gender female and etnicity group E have more successful in exams performanc
+If we see on the data above, like it or not, privilege does exist, parent education, lunch package, and test preparation course have an impact to what makes student more successful than the others. Genetic factors like gender female and etnicity group E have more successful in zzexams performanc

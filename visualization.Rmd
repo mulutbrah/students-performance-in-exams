@@ -1,0 +1,203 @@
+---
+title: "The Influence of Gender, Race, and Parent Level of Education to Student Performance in Exams"
+author: "lutfi"
+date: "4/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(plotly)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+edu <- read.csv('./data/StudentsPerformance.csv')
+
+head(edu)
+```
+
+# Foreword
+
+There's a lot of question around that always makes me tired to heard of, "is privilege likes parent education, gender, race, or any other external factor cause student more successful?". Can we cheat the life to be more successful if we know the aspect? Is there any patterns? Although "success" have many meanings depends on personal bias, I always curious what aspect that separate the success one and not. Unfurnately, I don't find any data that record of success aspects, but I find the dataset on kaggle that records *Student Performance in Exams* based on many variables like gender, race, parental level of education, etc. So I decide to simplify my research based on students success in school life.
+
+# Introduction: Dataset of Student Performance in Exams
+
+I found the dataset on kaggle (https://www.kaggle.com/spscientist/students-performance-in-exams) by Jakki Seshapanpu. The author marks secured by the students in various subjects.
+
+The dataset have certain columns:
+  - gender
+  - race/ethnicity
+  - parental level of education
+  - lunch
+  - test preparation course
+  - math score
+  - reading score
+  - writing score
+  
+We have no problem here, so let's start exploring with the data, but first we need some cleaning and correction the data.
+
+## Read Data
+
+```{r}
+data <- read.csv('./data/StudentsPerformance.csv')
+```
+
+```{r}
+str(data)
+```
+
+The data can be run without error.
+
+## Cleaning and Corection Data
+
+## Cleaning Data
+
+Data Cleaning is the process of transforming raw data into consistent data that can be analyzed.
+
+### Check NA Value
+
+```{r}
+anyNA(data)
+```
+
+Because there is no empty/NA data, I will continue to corection the data.
+
+## Corection Data
+
+Corection Data is the process when we found something off our expectation like typos, false type data, or rounding error.
+
+### Check Data Type
+
+```{r}
+str(data)
+```
+
+### Change Data Type
+
+```{r}
+data$gender <- as.factor(data$gender)
+data$race.ethnicity <- as.factor(data$race.ethnicity)
+data$parental.level.of.education <- as.factor(data$parental.level.of.education)
+data$lunch <- as.factor(data$lunch)
+data$test.preparation.course  <- as.factor(data$test.preparation.course )
+```
+
+Data has been changed
+
+## Data Exploratory
+
+We have a mission to find out what external aspect that makes student success in exams
+
+### Genetic
+
+#### Gender
+
+```{r}
+gender_agg <- aggregate(cbind(Final_Score = math.score + reading.score + writing.score)/3 ~ gender, data, mean)
+
+# visualisasi
+plot_gender <- ggplot(data = gender_agg, 
+       aes(x = Final_Score, y = gender)
+       ) +
+  geom_col(aes(color = gender)) +
+  labs(x = "Final Score", y = "Gender", title = "Gender Comparison - Student Performance in Exams") +
+  theme_minimal()+
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5))
+
+# add interactivity
+ggplotly(plot_gender, tooltip = "text")
+```
+Female have higher score than male in 3 test combine
+
+#### Race Ethnicity  
+
+```{r}
+race_agg <- aggregate(cbind(Final_Score = math.score + reading.score + writing.score)/3 ~ race.ethnicity, data, mean)
+
+## visualisasi
+plot_race <- ggplot(data = race_agg, 
+       aes(x = Final_Score, 
+           y = race.ethnicity)
+       ) +
+  geom_col(aes(color = race.ethnicity)) +
+  labs(x = "Final Score", y = "Ethnicity", title = "Race Comparison - Student Performance in Exams") +
+  theme_minimal()+
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5))
+
+# add interactivity
+ggplotly(plot_race, tooltip = "text")
+```
+
+Group E have higher score than any other groups in 3 test combine
+
+### Privilege
+
+#### Parental Level of Education
+
+```{r}
+edu_agg <- aggregate(cbind(Final_Score = math.score + reading.score + writing.score)/3 ~ parental.level.of.education, data, mean)
+
+## visualisasi
+plot_edu <- ggplot(data = edu_agg, 
+       aes(x = Final_Score, 
+           y = parental.level.of.education)
+       ) +
+  geom_col(aes(color = parental.level.of.education)) +
+  labs(x = "Final Score", y = "Parental Level of Education", title = "Parent Education Comparison - Student Performance in Exams") +
+  theme_minimal()+
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5))
+
+# add interactivity
+ggplotly(plot_edu, tooltip = "text")
+```
+
+Parents with degree, which is have success in school, have more chance to make successful kid as well.
+
+#### Lunch
+
+```{r}
+lunch_agg <- aggregate(cbind(Final_Score = math.score + reading.score + writing.score)/3 ~ lunch, data, mean)
+
+## visualisasi
+plot_lunch <- ggplot(data = lunch_agg, 
+       aes(x = Final_Score, 
+           y = lunch)
+       ) +
+  geom_col(aes(color = lunch)) +
+  labs(x = "Final Score", y = "Lunch Package", title = "Lunch Package Comparison - Student Performance in Exams") +
+  theme_minimal()+
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5))
+
+# add interactivity
+ggplotly(plot_lunch, tooltip = "text")
+```
+#### Test Preparation Course
+
+```{r}
+course_agg <- aggregate(cbind(Final_Score = math.score + reading.score + writing.score)/3 ~ test.preparation.course, data, mean)
+
+## visualisasi
+plot_course <- ggplot(data = course_agg, 
+       aes(x = Final_Score, 
+           y = lunch)
+       ) +
+  geom_col(aes(color = lunch)) +
+  labs(x = "Final Score", y = "Course Preparation Before Exam", title = "Course Preparation Before Exam - Student Performance in Exams") +
+  theme_minimal()+
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5))
+
+# add interactivity
+ggplotly(plot_lunch, tooltip = "text")
+```
+
+Student who finished Test Preparation Course have more successfull in test.
+
+## Summary
+
+If we see on the data above, like it or not, privilege does exist, parent education, lunch package, and test preparation course have an impact to what makes student more successful than the others. Genetic factors like gender female and etnicity group E have more successful in exams performanc

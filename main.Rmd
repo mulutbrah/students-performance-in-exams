@@ -1,0 +1,137 @@
+---
+title: "The Influence of Gender, Race, and Parent Level of Education to Student Performance in Exams"
+author: "lutfi"
+date: "4/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+edu <- read.csv('./data/StudentsPerformance.csv')
+
+head(edu)
+```
+
+# Foreword
+
+There's a lot of question around that always makes me tired to heard of, "is privilege likes parent education, gender, race, or any other external factor cause student more successful?". Can we cheat the life to be more successful if we know the aspect? Is there any patterns? Although "success" have many meanings depends on personal bias, I always curious what aspect that separate the success one and not. Unfurnately, I don't find any data that record of success aspects, but I find the dataset on kaggle that records *Student Performance in Exams* based on many variables like gender, race, parental level of education, etc. So I decide to simplify my research based on students success in school life.
+
+# Introduction: Dataset of Student Performance in Exams
+
+I found the dataset on kaggle (https://www.kaggle.com/spscientist/students-performance-in-exams) by Jakki Seshapanpu. The author marks secured by the students in various subjects.
+
+The dataset have certain columns:
+  - gender
+  - race/ethnicity
+  - parental level of education
+  - lunch
+  - test preparation course
+  - math score
+  - reading score
+  - writing score
+  
+We have no problem here, so let's start exploring with the data, but first we need some cleaning and correction the data.
+
+## Read Data
+
+```{r}
+data <- read.csv('./data/StudentsPerformance.csv')
+```
+
+```{r}
+str(data)
+```
+
+The data can be run without error.
+
+## Cleaning and Corection Data
+
+## Cleaning Data
+
+Data Cleaning is the process of transforming raw data into consistent data that can be analyzed.
+
+### Check NA Value
+
+```{r}
+anyNA(data)
+```
+
+Because there is no empty/NA data, I will continue to corection the data.
+
+## Corection Data
+
+Corection Data is the process when we found something off our expectation like typos, false type data, or rounding error.
+
+### Check Data Type
+
+```{r}
+str(data)
+```
+
+### Change Data Type
+
+```{r}
+data$gender <- as.factor(data$gender)
+data$race.ethnicity <- as.factor(data$race.ethnicity)
+data$parental.level.of.education <- as.factor(data$parental.level.of.education)
+data$lunch <- as.factor(data$lunch)
+data$test.preparation.course  <- as.factor(data$test.preparation.course )
+```
+
+Data has been changed
+
+## Data Exploratory
+
+We have a mission to find out what external aspect that makes student success in exams
+
+### Genetic
+
+#### Gender
+
+```{r}
+aggregate(math.score + reading.score + writing.score ~ gender, data, mean)
+```
+Female have higher score than male in 3 test combine
+
+#### Race Ethnicity  
+
+```{r}
+aggregate(math.score + reading.score + writing.score ~ race.ethnicity, data, mean)
+```
+
+Group E have higher score than any other groups in 3 test combine
+
+### Priviledge
+
+#### Parental Level of Education
+
+```{r}
+aggregate(math.score + reading.score + writing.score ~ parental.level.of.education, data, mean)
+```
+
+```{r}
+heatmap(aggregate(math.score + reading.score + writing.score ~ parental.level.of.education, data, mean))
+```
+
+
+Parents with degree, which is have success in school, have more chance to make successful kid as well.
+
+#### Lunch
+
+```{r}
+aggregate(math.score + reading.score + writing.score ~ lunch, data, mean)
+```
+#### Test Preparation Course
+
+```{r}
+aggregate(math.score + reading.score + writing.score ~ test.preparation.course, data, mean)
+```
+
+Student who finished Test Preparation Course have more successfull in test.
+
+## Summary
+
+If we see on the data above, like it or not, priviledge does exist, parent education, lunch package, and test preparation course have an impact to what makes student more successful than the others. Genetic factors like gender female and etnicity group E have more successful in exams performance.
